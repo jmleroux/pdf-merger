@@ -1,0 +1,13 @@
+{
+    "name": "clegginabox/pdf-merger",
+    "description": "PDF File Merger for PHP5",
+    "require": {
+        "itbz/fpdi": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "Paul Clegg",
+            "email": "paul@fast-fwd.co.uk"
+        }
+    ]
+}
