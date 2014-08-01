@@ -1,6 +1,6 @@
 #PDFMerger for PHP (PHP 5 Compatible)
 
-Original written by http://pdfmerger.codeplex.com/team/view
+Original written by http://pdfmerger.codeplex.com/team/view<br />
 Forked from https://github.com/myokyawhtun/PDFMerger
 
 ## Composer Compatible
