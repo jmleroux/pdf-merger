@@ -7,6 +7,10 @@ Forked from https://github.com/myokyawhtun/PDFMerger
 
 I've just forked this package to make it compatible with composer
 
+To install add this line to your composer.json
+
+```"clegginabox/pdf-merger": "dev-master"```
+
 ### Example Usage
 ```php
 
@@ -17,7 +21,7 @@ $pdf->addPDF('samplepdfs/two.pdf', '1-2');
 $pdf->addPDF('samplepdfs/three.pdf', 'all');
 
 
-$pdf->merge('file', 'samplepdfs/TEST2.pdf'); 
-    
+$pdf->merge('file', 'samplepdfs/TEST2.pdf');
+
 // REPLACE 'file' WITH 'browser', 'download', 'string', or 'file' for output options
 ```
