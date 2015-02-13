@@ -21,7 +21,8 @@ $pdf->addPDF('samplepdfs/two.pdf', '1-2');
 $pdf->addPDF('samplepdfs/three.pdf', 'all');
 
 
-$pdf->merge('file', 'samplepdfs/TEST2.pdf');
+$pdf->merge('file', 'samplepdfs/TEST2.pdf', 'P');
 
 // REPLACE 'file' WITH 'browser', 'download', 'string', or 'file' for output options
+// Last parameter is for orientation (P for protrait, L for Landscape)
 ```
