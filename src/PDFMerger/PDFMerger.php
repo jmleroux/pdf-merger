@@ -38,14 +38,14 @@ class PDFMerger
      * @param $pages
      * @return void
      */
-    public function addPDF($filepath, $pages = 'all')
+    public function addPDF($filepath, $pages = 'all', $orientation = null)
     {
         if (file_exists($filepath)) {
             if (strtolower($pages) != 'all') {
                 $pages = $this->_rewritepages($pages);
             }
 
-            $this->_files[] = array($filepath, $pages);
+            $this->_files[] = array($filepath, $pages, $orientation);
         } else {
             throw new Exception("Could not locate PDF on '$filepath'");
         }
@@ -72,6 +72,7 @@ class PDFMerger
         foreach ($this->_files as $file) {
             $filename  = $file[0];
             $filepages = $file[1];
+            $fileorientation = (!is_null($file[2])) ? $file[2] : $orientation;
 
             $count = $fpdi->setSourceFile($filename);
 
@@ -81,7 +82,7 @@ class PDFMerger
                     $template   = $fpdi->importPage($i);
                     $size       = $fpdi->getTemplateSize($template);
 
-                    $fpdi->AddPage($orientation, array($size['w'], $size['h']));
+                    $fpdi->AddPage($fileorientation, array($size['w'], $size['h']));
                     $fpdi->useTemplate($template);
                 }
             } else {
@@ -91,7 +92,7 @@ class PDFMerger
                     }
                     $size = $fpdi->getTemplateSize($template);
 
-                    $fpdi->AddPage($orientation, array($size['w'], $size['h']));
+                    $fpdi->AddPage($fileorientation, array($size['w'], $size['h']));
                     $fpdi->useTemplate($template);
                 }
             }
