@@ -22,7 +22,7 @@ $pdf->addPDF('samplepdfs/three.pdf', 'all');
 
 //You can optionally specify a different orientation for each PDF
 $pdf->addPDF('samplepdfs/one.pdf', '1, 3, 4', 'L');
-$pdf->addPDF('samplepdfs/two.pdf', '1-2', 'P);
+$pdf->addPDF('samplepdfs/two.pdf', '1-2', 'P');
 
 $pdf->merge('file', 'samplepdfs/TEST2.pdf', 'P');
 
