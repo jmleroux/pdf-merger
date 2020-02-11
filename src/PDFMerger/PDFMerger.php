@@ -24,8 +24,7 @@
 namespace Clegginabox\PDFMerger;
 
 use Exception;
-use fpdi\FPDI;
-use fpdf\FPDF;
+use setasign\Fpdi\Fpdi;
 
 class PDFMerger
 {
@@ -66,7 +65,7 @@ class PDFMerger
             throw new Exception("No PDFs to merge.");
         }
 
-        $fpdi = new FPDI;
+        $fpdi = new Fpdi();
 
         // merger operations
         foreach ($this->_files as $file) {
@@ -82,7 +81,7 @@ class PDFMerger
                     $template   = $fpdi->importPage($i);
                     $size       = $fpdi->getTemplateSize($template);
 
-                    $fpdi->AddPage($fileorientation, array($size['w'], $size['h']));
+                    $fpdi->AddPage($fileorientation, array($size['width'], $size['height']));
                     $fpdi->useTemplate($template);
                 }
             } else {
