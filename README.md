@@ -13,7 +13,7 @@ To install add this line to your composer.json
 
 or
 
-```composer require clegginabox/pdf-merger: "dev-master"```
+```composer require clegginabox/pdf-merger:dev-master```
 
 ### Example Usage
 ```php
