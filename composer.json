@@ -1,7 +1,8 @@
 {
     "name": "jmleroux/pdf-merger",
-    "description": "PDF File Merger for PHP7",
+    "description": "PDF File Merger for PHP 7",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Paul Clegg",
