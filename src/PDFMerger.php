@@ -91,7 +91,7 @@ class PDFMerger
                     }
                     $size = $fpdi->getTemplateSize($template);
 
-                    $fpdi->AddPage($fileorientation, [$size['w'], $size['h']]);
+                    $fpdi->AddPage($fileorientation, [$size['width'], $size['height']]);
                     $fpdi->useTemplate($template);
                 }
             }

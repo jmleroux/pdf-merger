@@ -11,4 +11,4 @@ tests:
 
 .PHONY: coverage
 coverage:
-	$(DOCKER_RUN_XDEBUG) vendor/bin/phpunit --coverage-html var/coverage
+	$(DOCKER_RUN_XDEBUG) vendor/bin/phpunit --coverage-html var/coverage tests
