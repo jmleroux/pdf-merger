@@ -6,7 +6,7 @@ Forked from https://github.com/clegginabox/pdf-merger
 
 ## Installation
 
-```composer require jmleroux/pdf-merger:dev-master```
+```composer require jmleroux/pdf-merger```
 
 ## Example Usage
 ```php
@@ -45,3 +45,11 @@ To run tests:
 ```
 make tests
 ```
+
+### WTF?
+
+Yes, why the fork?
+
+I first made a PR to fix the "slice feature", but I figured out I wanted a library with tests and tags.
+Plus, I wanted to add docker-compose because I do not have any local PHP installed anymore,
+so I decided to fork it and start with PHP 7. 
