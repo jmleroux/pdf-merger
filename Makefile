@@ -7,7 +7,7 @@ vendor:
 .PHONY: tests
 tests:
 	$(DOCKER_RUN) ./vendor/bin/php-cs-fixer fix --diff --config=.php_cs.dist
-	$(DOCKER_RUN) ./vendor/bin/phpunit tests
+	$(DOCKER_RUN_XDEBUG) ./vendor/bin/phpunit tests
 
 .PHONY: coverage
 coverage:

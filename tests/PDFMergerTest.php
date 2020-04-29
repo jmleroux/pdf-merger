@@ -30,7 +30,7 @@ class PDFMergerTest extends TestCase
             ->addPDF($this->samplesDirectory . 'github_2.pdf')
             ->merge('file', $this->resultDirectory . 'test_github_1.pdf');
 
-        $this->verifyResult('result_all_pages.pdf', 'test_github_1.pdf');
+        $this->verifyFiles('result_all_pages.pdf', 'test_github_1.pdf');
     }
 
     public function testMergePdfSpecificPages()
@@ -41,7 +41,7 @@ class PDFMergerTest extends TestCase
             ->addPDF($this->samplesDirectory . 'github_home.pdf', '5,6')
             ->merge('file', $this->resultDirectory . 'test_github_1.pdf');
 
-        $this->verifyResult('result_specific_pages.pdf', 'test_github_1.pdf');
+        $this->verifyFiles('result_specific_pages.pdf', 'test_github_1.pdf');
     }
 
     public function testMergePdfPagesRange()
@@ -52,7 +52,7 @@ class PDFMergerTest extends TestCase
             ->addPDF($this->samplesDirectory . 'github_home.pdf', '6,7')
             ->merge('file', $this->resultDirectory . 'test_github_1.pdf');
 
-        $this->verifyResult('result_pages_range.pdf', 'test_github_1.pdf');
+        $this->verifyFiles('result_pages_range.pdf', 'test_github_1.pdf');
     }
 
     public function testBadPageList()
@@ -106,7 +106,55 @@ class PDFMergerTest extends TestCase
         $pdf->merge('file', $this->resultDirectory . 'test_github_1.pdf');
     }
 
-    private function verifyResult(string $original, string $result): void
+    public function testModeString()
+    {
+        $pdf = new PDFMerger();
+
+        $output = $pdf->addPDF($this->samplesDirectory . 'github_1.pdf')
+            ->addPDF($this->samplesDirectory . 'github_2.pdf')
+            ->merge('string', $this->resultDirectory . 'test_github_1.pdf');
+        $this->assertEquals(64955, strlen($output));
+    }
+
+    public function testModeBrowser()
+    {
+        $pdf = new PDFMerger();
+
+        ob_start();
+        $pdf->addPDF($this->samplesDirectory . 'github_1.pdf')
+            ->addPDF($this->samplesDirectory . 'github_2.pdf')
+            ->merge('browser', $this->resultDirectory . 'test_github_1.pdf');
+        $output = ob_get_clean();
+
+        $this->assertEquals(64955, strlen($output));
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testModeDownload()
+    {
+        $pdf = new PDFMerger();
+
+        ob_start();
+        $pdf->addPDF($this->samplesDirectory . 'github_1.pdf')
+            ->addPDF($this->samplesDirectory . 'github_2.pdf')
+            ->merge('download', $this->resultDirectory . 'test_github_1.pdf');
+        $output = ob_get_clean();
+
+        $this->assertEquals(64955, strlen($output));
+        $this->assertContains(
+            'Content-Type: application/x-download',
+            xdebug_get_headers()
+        );
+        $this->assertContains(
+            'Content-Disposition: attachment; filename="/srv/jmleroux/tests/../var/test_github_1.pdf"',
+            xdebug_get_headers()
+        );
+        $this->assertEquals(64955, strlen($output));
+    }
+
+    private function verifyFiles(string $original, string $result): void
     {
         $this->assertFileExists($this->resultDirectory . $result);
 

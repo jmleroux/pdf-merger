@@ -149,17 +149,17 @@ class PDFMerger
             $ind = explode('-', $i);
 
             if (count($ind) == 2) {
-                $x = $ind[0]; //start page
-                $y = $ind[1]; //end page
+                $start = $ind[0]; //start page
+                $end = $ind[1]; //end page
 
-                if ($x > $y) {
-                    throw new InvalidArgumentException("Starting page, '$x' is greater than ending page '$y'.");
+                if ($start > $end) {
+                    throw new InvalidArgumentException("Starting page, '$start' is greater than ending page '$end'.");
                 }
 
                 //add middle pages
-                while ($x <= $y) {
-                    $newpages[] = (int) $x;
-                    $x++;
+                while ($start <= $end) {
+                    $newpages[] = (int) $start;
+                    $start++;
                 }
             } else {
                 $newpages[] = (int) $ind[0];
