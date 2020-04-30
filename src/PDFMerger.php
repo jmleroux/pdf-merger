@@ -18,15 +18,33 @@ namespace Jmleroux\PDFMerger;
 use InvalidArgumentException;
 use RuntimeException;
 use setasign\Fpdi\Fpdi;
+use setasign\Fpdi\Tcpdf\Fpdi as FpdiTcpdf;
+use setasign\Fpdi\Tfpdf\Fpdi as FpdiTFpdf;
 
 class PDFMerger
 {
+    private const LIB_FPDF = 'fpdf';
+    private const LIB_TCPDF = 'tcpdf';
+    private const LIB_TFPDF = 'tfpdf';
+
+    /** @var string */
+    private $library;
+
     /**
      * ['form.pdf']  ["1,2,4, 5-19"]
      *
      * @var string[]
      */
     private $files;
+
+    public function __construct(string $library = self::LIB_FPDF)
+    {
+        if (!in_array($library, [self::LIB_FPDF, self::LIB_TCPDF,self::LIB_TFPDF])) {
+            throw new InvalidArgumentException(sprintf('Unknown Fpdi library provided: "%s"', $library));
+        }
+
+        $this->library = $library;
+    }
 
     /**
      * Add a PDF for inclusion in the merge with a valid file path.
@@ -61,7 +79,17 @@ class PDFMerger
             throw new RuntimeException("No PDFs to merge.");
         }
 
-        $fpdi = new Fpdi();
+        switch ($this->library) {
+            case self::LIB_FPDF:
+                $fpdi = new Fpdi();
+                break;
+            case self::LIB_TCPDF:
+                $fpdi = new FpdiTcpdf();
+                break;
+            case self::LIB_TFPDF:
+                $fpdi = new FpdiTFpdf();
+                break;
+        }
 
         // merger operations
         foreach ($this->files as $file) {

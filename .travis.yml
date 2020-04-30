@@ -10,7 +10,6 @@ cache:
         - $HOME/.composer/cache/files
 
 before_install:
-    - phpenv config-rm xdebug.ini
     - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 install:

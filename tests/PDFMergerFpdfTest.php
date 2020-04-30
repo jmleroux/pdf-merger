@@ -9,7 +9,7 @@ use Jmleroux\PDFMerger\PDFMerger;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-class PDFMergerTest extends TestCase
+class PDFMergerFpdfTest extends TestCase
 {
     /** @var string */
     private $resultDirectory;
@@ -30,7 +30,7 @@ class PDFMergerTest extends TestCase
             ->addPDF($this->samplesDirectory . 'github_2.pdf')
             ->merge('file', $this->resultDirectory . 'test_github_1.pdf');
 
-        $this->verifyFiles('result_all_pages.pdf', 'test_github_1.pdf');
+        $this->verifyFiles('results/fpdf/result_all_pages.pdf', 'test_github_1.pdf');
     }
 
     public function testMergePdfSpecificPages()
@@ -41,7 +41,7 @@ class PDFMergerTest extends TestCase
             ->addPDF($this->samplesDirectory . 'github_home.pdf', '5,6')
             ->merge('file', $this->resultDirectory . 'test_github_1.pdf');
 
-        $this->verifyFiles('result_specific_pages.pdf', 'test_github_1.pdf');
+        $this->verifyFiles('results/fpdf/result_specific_pages.pdf', 'test_github_1.pdf');
     }
 
     public function testMergePdfPagesRange()
@@ -52,7 +52,7 @@ class PDFMergerTest extends TestCase
             ->addPDF($this->samplesDirectory . 'github_home.pdf', '6,7')
             ->merge('file', $this->resultDirectory . 'test_github_1.pdf');
 
-        $this->verifyFiles('result_pages_range.pdf', 'test_github_1.pdf');
+        $this->verifyFiles('results/fpdf/result_pages_range.pdf', 'test_github_1.pdf');
     }
 
     public function testBadPageList()
@@ -71,7 +71,7 @@ class PDFMergerTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Page number "3" out of available page range (1 - 2)');
-        $pdf->addPDF($this->samplesDirectory . 'result_all_pages.pdf', '1-6')
+        $pdf->addPDF($this->samplesDirectory . 'results/fpdf/result_all_pages.pdf', '1-6')
             ->merge('file', $this->resultDirectory . 'test_github_1.pdf');
     }
 
@@ -81,7 +81,7 @@ class PDFMergerTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Starting page, '5' is greater than ending page '2'.");
-        $pdf->addPDF($this->samplesDirectory . 'result_all_pages.pdf', '5-2')
+        $pdf->addPDF($this->samplesDirectory . 'results/fpdf/result_all_pages.pdf', '5-2')
             ->merge('file', $this->resultDirectory . 'test_github_1.pdf');
     }
 
@@ -148,7 +148,10 @@ class PDFMergerTest extends TestCase
             xdebug_get_headers()
         );
         $this->assertContains(
-            'Content-Disposition: attachment; filename="/srv/jmleroux/tests/../var/test_github_1.pdf"',
+            sprintf(
+                'Content-Disposition: attachment; filename="%stest_github_1.pdf"',
+                $this->resultDirectory
+            ),
             xdebug_get_headers()
         );
         $this->assertEquals(64955, strlen($output));

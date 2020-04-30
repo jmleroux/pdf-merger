@@ -9,9 +9,12 @@ Forked from https://github.com/clegginabox/pdf-merger
 ```composer require jmleroux/pdf-merger```
 
 ## Example Usage
-```php
 
-$pdf = new \Jmleroux\PDFMerger\PDFMerger;
+```php
+<?php
+use Jmleroux\PDFMerger\PDFMerger;
+
+$pdf = new PDFMerger();
 
 $pdf->addPDF('samplepdfs/one.pdf', '1, 3, 4');
 $pdf->addPDF('samplepdfs/two.pdf', '1-2');
@@ -22,11 +25,33 @@ $pdf->addPDF('samplepdfs/one.pdf', '1, 3, 4', 'L');
 $pdf->addPDF('samplepdfs/two.pdf', '1-2', 'P');
 
 $pdf->merge('file', 'samplepdfs/TEST2.pdf', 'P');
-
-// REPLACE 'file' WITH 'browser', 'download', 'string', or 'file' for output options
-// Last parameter is for orientation (P for protrait, L for Landscape). 
-// This will be used for every PDF that doesn't have an orientation specified
 ```
+
+### PDF libraries
+
+You can use either FPDF, TCPDF or tFPDF as the internal PDF library
+by providing the right parameter to the constructor:
+ 
+```php
+<?php
+use Jmleroux\PDFMerger\PDFMerger;
+
+$pdf = new PDFMerger(); // use FPDF
+$pdf = new PDFMerger('fpdf'); // use FPDF
+
+$pdf = new PDFMerger('tcpdf'); // use TCPDF
+
+$pdf = new PDFMerger('tfpdf'); // use tFPDF
+```
+
+### Output modes
+
+This merger uses verbose parameter names for the various pdf output modes common to the three libraries:
+ 
+* `browser` (default): send the pdf binary to the browser. The borwser PDF plug-in is used if available.
+* `download`: send the pdf to the browser and force a file download with the name given.
+* `string`: outputs the raw binary string.
+* `file`: save to a local server file with the name given.
 
 ## Development
 
